@@ -26,4 +26,13 @@ resource "aws_instance" "example" {
     user = "${var.INSTANCE_USERNAME}"
     private_key = "${file("${var.PATH_TO_PRIVATE_KEY}")}"
   }
+  # execute locally on your machine
+  # will save the VM's private ip @ locally in a file.
+  provisioner "local-exec" {
+     command = "echo ${aws_instance.example.private_ip} >> private_ips.txt"
+  }
+}
+# outputs to the consol the VM's public IP @
+output "ip" {
+    value = "${aws_instance.example.public_ip}"
 }
