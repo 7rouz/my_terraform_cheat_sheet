@@ -4,6 +4,10 @@ provider "aws" {
   version = "~> 2.45"  
 }
 
+provider "template" {
+  version = "~> 2.1"
+}
+
 data "template_file" "py3-userdata" {
   template = file("${path.cwd}/py3-userdata.tpl")
 }
@@ -61,6 +65,5 @@ resource "aws_instance" "py3" {
 
   # add user-data script that will be ran when spawning instance 
   user_data = data.template_file.py3-userdata.template
-
 }
 
