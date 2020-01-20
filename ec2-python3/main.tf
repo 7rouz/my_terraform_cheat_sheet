@@ -65,5 +65,9 @@ resource "aws_instance" "py3" {
 
   # add user-data script that will be ran when spawning instance 
   user_data = data.template_file.py3-userdata.template
+<<<<<<< HEAD
+=======
+
+>>>>>>> 180a068fb666e29edf33593243fc1fb06c7a71c7
 }
 
