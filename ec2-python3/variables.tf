@@ -6,6 +6,7 @@ connect.
 
 Example: ~/.ssh/terraform.pub
 DESCRIPTION
+  default = "/home/ec2-user/.ssh/id_rsa.pub" 
 }
 
 variable "aws_region" {
