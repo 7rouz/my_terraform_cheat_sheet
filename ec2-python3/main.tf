@@ -4,6 +4,10 @@ provider "aws" {
   version = "~> 2.45"  
 }
 
+data "template_file" "py3-userdata" {
+  template = file("${path.cwd}/py3-userdata.tpl")
+}
+
 # A security group to make EC2 accessible via ssh
 resource "aws_security_group" "py3_ssh" {
   name        = "python3_ssh_sec_group"
@@ -55,12 +59,8 @@ resource "aws_instance" "py3" {
   # Our Security group to allow SSH access
   vpc_security_group_ids = ["${aws_security_group.py3_ssh.id}"]
 
-  # We run a remote provisioner on the instance after creating it.
-  # In this case, we just install git and python3
-  provisioner "remote-exec" {
-    inline = [
-      "sudo yum -y update",
-      "sudo yum -y git python3"
-    ]
-  }
+  # add user-data script that will be ran when spawning instance 
+  user_data = data.template_file.py3-userdata.template
+
 }
+
